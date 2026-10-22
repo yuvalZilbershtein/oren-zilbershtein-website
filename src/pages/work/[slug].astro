@@ -1,0 +1,148 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Gallery from '../../components/Gallery.astro';
+import Icon from '../../components/Icon.astro';
+import Base from '../../layouts/Base.astro';
+import {
+  attribution,
+  getPlaces,
+  getTestimonials,
+  mediaCount,
+  type Place,
+  placeLocation,
+} from '../../lib/content';
+
+export async function getStaticPaths() {
+  const places = await getPlaces();
+  return places.map((place, i) => ({
+    params: { slug: place.slug },
+    props: {
+      place,
+      prev: places[i - 1] ?? places.at(-1),
+      next: places[i + 1] ?? places[0],
+    },
+  }));
+}
+
+interface Props {
+  place: Place;
+  prev: Place;
+  next: Place;
+}
+
+const { place, prev, next } = Astro.props;
+const { data, media, cover, logo } = place;
+const { Content } = await render(place.entry);
+const testimonials = (await getTestimonials()).filter((t) => t.place === place.slug);
+const location = placeLocation(data);
+const meta = [data.type, data.year].filter(Boolean).join(' · ');
+const hasStory = Boolean(place.entry.body?.trim());
+const hasOthers = prev.slug !== place.slug;
+---
+
+<Base title={data.name} description={data.summary ?? undefined} image={cover?.src}>
+  <section class="container place-hero">
+    <a class="back-link" href="/#work"><Icon name="arrow-left" /> All work</a>
+    <div class="place-hero-grid">
+      <div class="rise">
+        {logo && <Image class="place-logo" src={logo} alt={`${data.name} logo`} widths={[168, 336]} sizes="84px" />}
+        {meta && <p class="eyebrow">{meta}</p>}
+        <h1 class="place-title">{data.name}</h1>
+        {location && <p class="place-location">{location}</p>}
+        {data.summary && <p class="place-summary">{data.summary}</p>}
+      </div>
+      {
+        cover && (
+          <div class="place-hero-media rise" style="--delay: .1s">
+            <Image
+              src={cover.src}
+              alt={cover.alt}
+              widths={[480, 800, 1000]}
+              sizes="(max-width: 900px) 100vw, 460px"
+              priority
+            />
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    (hasStory || data.services.length > 0) && (
+      <section class="container place-intro" data-story={hasStory || undefined}>
+        {hasStory && (
+          <div class="prose" data-reveal>
+            <Content />
+          </div>
+        )}
+        {data.services.length > 0 && (
+          <div class="facts" data-reveal style="--delay: .1s">
+            <h2>What I did</h2>
+            <ul>
+              {data.services.map((s) => (
+                <li>{s}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </section>
+    )
+  }
+
+  <section class="container gallery-section" aria-labelledby="gallery-title">
+    <div class="gallery-head">
+      <h2 id="gallery-title">Gallery</h2>
+      {media.length > 0 && <p>{mediaCount(media)} · tap to enlarge</p>}
+    </div>
+    {media.length > 0 ? <Gallery media={media} /> : <p class="gallery-empty">Photos coming soon.</p>}
+  </section>
+
+  {
+    testimonials.length > 0 && (
+      <section class="section section--dark" aria-label="Testimonial">
+        <div class="container">
+          <p class="eyebrow eyebrow--center" data-reveal>
+            In their words
+          </p>
+          {testimonials.map((t) => {
+            const { who, details } = attribution(t);
+            return (
+              <figure class="quote-block" data-reveal>
+                <blockquote>{t.quote}</blockquote>
+                <figcaption>
+                  <strong>{who}</strong>
+                  {details.map((d) => (
+                    <span>{d}</span>
+                  ))}
+                </figcaption>
+              </figure>
+            );
+          })}
+        </div>
+      </section>
+    )
+  }
+
+  <div class="container">
+    {
+      hasOthers && (
+        <nav class="place-nav" aria-label="More work">
+          <a href={`/work/${prev.slug}/`}>
+            <small>Previous</small>
+            <strong>{prev.data.name}</strong>
+          </a>
+          <a href={`/work/${next.slug}/`}>
+            <small>Next</small>
+            <strong>{next.data.name}</strong>
+          </a>
+        </nav>
+      )
+    }
+
+    <div class="cta-band" data-reveal>
+      <h2>Want desserts like these in your business?</h2>
+      <a class="btn btn--light" href="/#contact">Get in touch <Icon name="arrow-right" /></a>
+    </div>
+  </div>
+</Base>

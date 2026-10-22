@@ -1,0 +1,93 @@
+---
+import 'photoswipe/style.css';
+import { getImage, Image } from 'astro:assets';
+import type { MediaItem } from '../lib/content';
+import Icon from './Icon.astro';
+
+interface Props {
+  media: MediaItem[];
+}
+
+const FULL_SIZE = 2048;
+// Very tall phone photos (or panoramas) are cropped a little in the grid;
+// the lightbox always shows the whole picture.
+const MIN_RATIO = 0.62;
+const MAX_RATIO = 2.2;
+
+const items = await Promise.all(
+  Astro.props.media.map(async (item) => {
+    const { width, height } = item.src;
+    const ratio = width / height;
+    const tileRatio = Math.min(MAX_RATIO, Math.max(MIN_RATIO, ratio));
+    const fullWidth = Math.min(width, FULL_SIZE);
+    const fullHeight = Math.round((height * fullWidth) / width);
+    const full = item.video ? item.video : (await getImage({ src: item.src, width: fullWidth, quality: 82 })).src;
+    return { ...item, tileRatio, cropped: tileRatio !== ratio, full, fullWidth, fullHeight };
+  }),
+);
+---
+
+<div class="gallery" data-gallery>
+  {
+    items.map((item, i) => (
+      <a
+        class:list={['gallery__item', item.video && 'gallery__item--video']}
+        href={item.full}
+        data-pswp-width={item.fullWidth}
+        data-pswp-height={item.fullHeight}
+        data-pswp-type={item.video ? 'video' : undefined}
+        data-cropped={item.cropped ? 'true' : undefined}
+        data-caption={item.caption}
+        style={`--ar: ${item.tileRatio.toFixed(4)}`}
+      >
+        <Image
+          src={item.src}
+          alt={item.alt}
+          widths={[400, 800, 1200]}
+          sizes={`(max-width: 640px) ${Math.round(item.tileRatio * 240)}px, ${Math.round(item.tileRatio * 420)}px`}
+          quality={78}
+          loading={i < 4 ? 'eager' : 'lazy'}
+        />
+        {
+          item.video && (
+            <span class="gallery__play" aria-hidden="true">
+              <Icon name="play" />
+            </span>
+          )
+        }
+      </a>
+    ))
+  }
+</div>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import PhotoSwipeVideoPlugin from 'photoswipe-video-plugin/dist/photoswipe-video-plugin.esm.js';
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gallery) => {
+    const lightbox = new PhotoSwipeLightbox({
+      gallery,
+      children: 'a',
+      pswpModule: () => import('photoswipe'),
+      bgOpacity: 0.96,
+      padding: { top: 48, bottom: 64, left: 16, right: 16 },
+    });
+    new PhotoSwipeVideoPlugin(lightbox, {});
+
+    lightbox.on('uiRegister', () => {
+      lightbox.pswp?.ui?.registerElement({
+        name: 'caption',
+        order: 9,
+        isButton: false,
+        appendTo: 'root',
+        onInit: (el, pswp) => {
+          pswp.on('change', () => {
+            el.textContent = pswp.currSlide?.data.element?.dataset.caption ?? '';
+          });
+        },
+      });
+    });
+
+    lightbox.init();
+  });
+</script>

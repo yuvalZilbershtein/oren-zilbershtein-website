@@ -1,0 +1,25 @@
+ADDING PHOTOS
+=============
+
+1. Inside this folder, make one folder per place, named in English letters:
+
+     new-photos/
+       Hotel Name/        ← all the photos from that hotel
+       Some Bakery/
+       chef/              ← portraits of the chef (optional)
+
+2. Copy the photos and videos in (straight from the phone is fine — iPhone
+   HEIC and .mov too). Add the business's logo, named "logo.png" or "logo.jpg".
+
+3. In a terminal, in the chef-website folder, run:
+
+     npm run add-photos
+
+   Each place gets its own gallery page. Photos are resized for the web,
+   hidden location data is removed, and videos get a cover picture.
+
+4. For a new place, open src/content/places/<place>/index.md and fill in
+   the city, country, year and a short description.
+
+Chef photos: in the chef/ folder, name the main portrait "hero.jpg" and the
+second one "about.jpg" before running the command.

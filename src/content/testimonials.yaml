@@ -1,0 +1,13 @@
+# Customer testimonials — shown on the home page, in this order.
+# Copy a block (from "- quote:" down) to add another one.
+# `place` is optional: the folder name of a place, to show the quote on that place's page too.
+
+- quote: >-
+    The professionalism, knowledge and sensitivity that went into setting up the
+    bakery gave me peace of mind and confidence. I felt I had a true partner —
+    someone who deeply understands the field and my needs.
+  # name: ✏️ who said it (e.g. the owner's name)
+  # role: Owner
+  business: Yoss Bakery
+  location: Panama City, Panama
+  place: yoss-bakery

@@ -1,0 +1,95 @@
+---
+import { attribution, getPlaces, getTestimonials } from '../lib/content';
+import Icon from './Icon.astro';
+
+const placeSlugs = new Set((await getPlaces()).map((p) => p.slug));
+const testimonials = (await getTestimonials()).map((t) => ({
+  ...t,
+  ...attribution(t),
+  link: t.place && placeSlugs.has(t.place) ? `/work/${t.place}/` : undefined,
+}));
+const [single] = testimonials.length === 1 ? testimonials : [];
+---
+
+{
+  single && (
+    <section class="section section--dark" id="testimonials">
+      <div class="container">
+        <p class="eyebrow eyebrow--center" data-reveal>
+          Kind words
+        </p>
+        <figure class="quote-block" data-reveal>
+          <blockquote>{single.quote}</blockquote>
+          <figcaption>
+            <strong>{single.who}</strong>
+            {single.details.map((d) => (
+              <span>{d}</span>
+            ))}
+            {single.link && <a href={single.link}>See the work</a>}
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  )
+}
+
+{
+  testimonials.length > 1 && (
+    <section class="section section--dark" id="testimonials">
+      <div class="container t-head">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Testimonials</p>
+          <h2 class="h2">
+            Kind words from <em>kitchens I’ve worked with</em>
+          </h2>
+        </div>
+        <div class="t-nav" data-reveal>
+          <button type="button" data-dir="-1" aria-label="Previous testimonial">
+            <Icon name="arrow-left" />
+          </button>
+          <button type="button" data-dir="1" aria-label="Next testimonial">
+            <Icon name="arrow-right" />
+          </button>
+        </div>
+      </div>
+
+      <div class="t-track" role="region" aria-label="Testimonials" tabindex="0" data-reveal>
+        {testimonials.map((t) => (
+          <figure class="t-card">
+            <blockquote>{t.quote}</blockquote>
+            <figcaption>
+              <strong>{t.who}</strong>
+              {t.details.map((d) => (
+                <span>{d}</span>
+              ))}
+              {t.link && <a href={t.link}>See the work</a>}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<script>
+  const track = document.querySelector<HTMLElement>('.t-track');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.t-nav button');
+
+  if (track) {
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      buttons[0].disabled = track.scrollLeft <= 2;
+      buttons[1].disabled = track.scrollLeft >= max;
+    };
+    buttons.forEach((button) =>
+      button.addEventListener('click', () => {
+        const card = track.querySelector<HTMLElement>('.t-card');
+        const step = (card?.offsetWidth ?? 400) + parseFloat(getComputedStyle(track).columnGap || '0');
+        track.scrollBy({ left: step * Number(button.dataset.dir), behavior: 'smooth' });
+      }),
+    );
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+</script>

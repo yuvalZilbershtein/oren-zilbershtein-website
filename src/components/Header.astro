@@ -1,0 +1,54 @@
+---
+import { site } from '../config';
+
+const initials = site.name
+  .split(/\s+/)
+  .map((word) => word[0])
+  .join('')
+  .toUpperCase();
+
+const links = [
+  { href: '/#work', label: 'Work' },
+  { href: '/#about', label: 'About' },
+  { href: '/#services', label: 'Services' },
+  { href: '/#testimonials', label: 'Testimonials' },
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label={`${site.name} — home`}>
+      <span class="brand__mono" aria-hidden="true">{initials}</span>
+      <span class="brand__text">
+        <strong>{site.name}</strong>
+        <span>{site.tagline}</span>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      Menu
+      <span class="menu-toggle__bars" aria-hidden="true"><span></span><span></span></span>
+    </button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+      <a class="btn btn--small" href="/#contact">Get in touch</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header')!;
+  const toggle = header.querySelector<HTMLButtonElement>('.menu-toggle')!;
+
+  const setOpen = (open: boolean) => {
+    header.toggleAttribute('data-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+
+  toggle.addEventListener('click', () => setOpen(!header.hasAttribute('data-open')));
+  header.querySelectorAll('.nav a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
+
+  const onScroll = () => header.toggleAttribute('data-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+</script>

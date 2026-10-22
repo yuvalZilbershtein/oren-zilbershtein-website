@@ -1,0 +1,239 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '../components/Icon.astro';
+import PlaceCard from '../components/PlaceCard.astro';
+import Testimonials from '../components/Testimonials.astro';
+import { site } from '../config';
+import signature from '../assets/brand/signature.png';
+import Base from '../layouts/Base.astro';
+import { getChefPhoto, getPlaces } from '../lib/content';
+
+const places = await getPlaces();
+const countries = [...new Set(places.map((p) => p.data.country).filter(Boolean))].sort() as string[];
+
+const counts: Record<string, number> = { places: places.length, countries: countries.length };
+const stats = site.stats
+  .map((s) => {
+    if (s.value) return s;
+    const count = counts[s.auto ?? ''] ?? 0;
+    return { ...s, value: count >= (s.min ?? 1) ? String(count) : '' };
+  })
+  .filter((s) => s.value);
+
+const heroPhoto = getChefPhoto('hero');
+const aboutPhoto = getChefPhoto('about');
+const { contact } = site;
+const whatsappLink = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(
+  'Hi! I found your website and would love to talk about a project.',
+)}`;
+const socials = [
+  { name: 'instagram', href: contact.instagram, label: 'Instagram' },
+  { name: 'facebook', href: contact.facebook, label: 'Facebook' },
+  { name: 'linkedin', href: contact.linkedin, label: 'LinkedIn' },
+].filter((s) => s.href) as { name: 'instagram' | 'facebook' | 'linkedin'; href: string; label: string }[];
+const badgeText = `${site.tagline} • ${site.basedIn} • Worldwide • `.toUpperCase();
+---
+
+<Base>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="rise">
+        <p class="eyebrow">{site.role}</p>
+        <h1 class="hero-title">
+          <Image
+            class="hero-signature"
+            src={signature}
+            alt={site.name}
+            widths={[540, 995]}
+            sizes="(max-width: 600px) 88vw, 540px"
+            priority
+          />
+        </h1>
+        <p class="hero-tagline">{site.hero.tagline}</p>
+        <p class="hero-intro">{site.hero.intro}</p>
+        <div class="hero-actions">
+          <a class="btn" href="#work">See my work <Icon name="arrow-right" /></a>
+          <a class="btn btn--ghost" href="#contact">Work with me</a>
+        </div>
+        <p class="hero-note"><Icon name="globe" /> Based in {site.basedIn} · Consulting worldwide</p>
+      </div>
+
+      <div class="hero-media rise" style="--delay: .15s">
+        <div class="arch">
+          {
+            heroPhoto && (
+              <Image
+                src={heroPhoto}
+                alt={site.hero.imageAlt}
+                widths={[480, 800, 1000]}
+                sizes="(max-width: 900px) 90vw, 500px"
+              />
+            )
+          }
+        </div>
+        <div class="badge" aria-hidden="true">
+          <svg viewBox="0 0 160 160">
+            <defs>
+              <path id="badge-circle" d="M80,80 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"></path>
+            </defs>
+            <text><textPath href="#badge-circle" textLength="388">{badgeText}</textPath></text>
+          </svg>
+          <strong>{site.yearsOfExperience}</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats" aria-label="At a glance">
+    <div class="container stats-grid">
+      {
+        stats.map((s, i) => (
+          <div class="stat" data-reveal style={`--delay: ${i * 0.1}s`}>
+            <strong>{s.value}</strong>
+            <span>{s.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section class="section" id="work">
+    <div class="container">
+      <div class="work-head">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Selected work</p>
+          <h2 class="h2">Kitchens I’ve helped <em>rise</em></h2>
+          <p class="lead">
+            Hotels, bakeries, cafés and restaurants — each with its own gallery of the pastries we created
+            together.
+          </p>
+        </div>
+        {
+          countries.length > 1 && (
+            <div class="filters" role="group" aria-label="Filter by country" data-reveal>
+              <button class="chip" type="button" data-filter="all" aria-pressed="true">
+                All
+              </button>
+              {countries.map((country) => (
+                <button class="chip" type="button" data-filter={country} aria-pressed="false">
+                  {country}
+                </button>
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      <div class="places-grid" data-count={places.length}>
+        {places.map((place, i) => <PlaceCard place={place} delay={(i % 3) * 0.1} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section about" id="about">
+    <div class="container about-grid">
+      <div class="about-media" data-reveal>
+        <div class="arch">
+          {
+            aboutPhoto && (
+              <Image
+                src={aboutPhoto}
+                alt={site.about.imageAlt}
+                widths={[480, 800, 1000]}
+                sizes="(max-width: 860px) 90vw, 460px"
+              />
+            )
+          }
+        </div>
+      </div>
+      <div class="about-text" data-reveal style="--delay: .1s">
+        <p class="eyebrow">About</p>
+        <h2 class="h2">{site.about.heading}</h2>
+        {site.about.paragraphs.map((p) => <p>{p}</p>)}
+        <div class="hero-actions">
+          <a class="btn btn--ghost" href="#contact">Let’s talk</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">How I can help</p>
+        <h2 class="h2">From the first idea <em>to the last crumb</em></h2>
+        <p class="lead">
+          Every business is different. I adapt to your concept, your kitchen and your team — these are the
+          places I usually make the biggest difference.
+        </p>
+      </div>
+      <div class="services-grid">
+        {
+          site.services.map((service, i) => (
+            <div class="service" data-reveal style={`--delay: ${(i % 3) * 0.08}s`}>
+              <span class="service__num">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{service.title}</h3>
+              <p>{service.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <Testimonials />
+
+  <!-- Contact -->
+  <section class="section contact" id="contact">
+    <div class="container" data-reveal>
+      <p class="eyebrow eyebrow--center">Contact</p>
+      <h2 class="contact-title">{contact.heading}</h2>
+      <p class="contact-text">{contact.text}</p>
+      <div class="contact-actions">
+        <a class="btn" href={`mailto:${contact.email}`}><Icon name="mail" /> Email me</a>
+        {
+          contact.whatsapp && (
+            <a class="btn btn--ghost" href={whatsappLink} target="_blank" rel="noopener">
+              <Icon name="whatsapp" /> WhatsApp
+            </a>
+          )
+        }
+      </div>
+      <p class="contact-meta">
+        <a href={`mailto:${contact.email}`}>{contact.email}</a> · Based in {site.basedIn} · Available worldwide ·
+        {contact.languages.join(' & ')}
+      </p>
+      {
+        socials.length > 0 && (
+          <div class="socials">
+            {socials.map((s) => (
+              <a href={s.href} target="_blank" rel="noopener" aria-label={s.label}>
+                <Icon name={s.name} />
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const cards = document.querySelectorAll<HTMLElement>('.place-card');
+
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      cards.forEach((card) => {
+        card.hidden = filter !== 'all' && card.dataset.country !== filter;
+      });
+    }),
+  );
+</script>

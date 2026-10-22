@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import { mediaCount, type Place, placeLocation } from '../lib/content';
+import Icon from './Icon.astro';
+
+interface Props {
+  place: Place;
+  delay?: number;
+}
+
+const { place, delay = 0 } = Astro.props;
+const { data, cover, media, logo } = place;
+const meta = [data.type, data.year].filter(Boolean).join(' · ');
+---
+
+<article class="place-card" data-country={data.country} data-reveal style={`--delay: ${delay}s`}>
+  <a href={`/work/${place.slug}/`}>
+    <div class="place-card__media">
+      {
+        cover ? (
+          <Image
+            src={cover.src}
+            alt=""
+            widths={[480, 720, 960]}
+            sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 500px"
+            quality={80}
+          />
+        ) : (
+          <div class="place-card__empty">Photos coming soon</div>
+        )
+      }
+      {
+        logo && (
+          <span class="place-card__logo">
+            <Image src={logo} alt="" widths={[100, 200]} sizes="50px" />
+          </span>
+        )
+      }
+      {media.length > 0 && <span class="place-card__count">{mediaCount(media)}</span>}
+    </div>
+    <div class="place-card__body">
+      {meta && <p class="place-card__meta">{meta}</p>}
+      <h3 class="place-card__title">{data.name}</h3>
+      <p class="place-card__location">{placeLocation(data)}</p>
+      {data.summary && <p class="place-card__summary">{data.summary}</p>}
+      <span class="arrow-link">View gallery <Icon name="arrow-right" /></span>
+    </div>
+  </a>
+</article>
