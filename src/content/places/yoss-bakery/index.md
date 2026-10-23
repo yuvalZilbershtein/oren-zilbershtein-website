@@ -2,7 +2,7 @@
 name: Yoss Bakery
 city: Panama City
 country: Panama
-year: 2024          # ✏️ taken from the "Est. 2024" on their packaging — confirm
+year: Since 2025
 type: Kosher bakery & café
 summary: Setting up a one-of-a-kind kosher bakery in Panama City — from laminated pastries and babka to challah, cakes and cookies.
 services:           # ✏️ draft — confirm or correct

@@ -22,6 +22,7 @@ const stats = site.stats
 
 const heroPhoto = getChefPhoto('hero');
 const aboutPhoto = getChefPhoto('about');
+const contactPhoto = getChefPhoto('contact');
 const { contact } = site;
 const whatsappLink = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(
   'Hi! I found your website and would love to talk about a project.',
@@ -191,6 +192,11 @@ const badgeText = `${site.tagline} • ${site.basedIn} • Worldwide • `.toUpp
   <!-- Contact -->
   <section class="section contact" id="contact">
     <div class="container" data-reveal>
+      {
+        contactPhoto && (
+          <Image class="contact-avatar" src={contactPhoto} alt={site.name} widths={[150, 300]} sizes="150px" />
+        )
+      }
       <p class="eyebrow eyebrow--center">Contact</p>
       <h2 class="contact-title">{contact.heading}</h2>
       <p class="contact-text">{contact.text}</p>
@@ -205,7 +211,7 @@ const badgeText = `${site.tagline} • ${site.basedIn} • Worldwide • `.toUpp
         }
       </div>
       <p class="contact-meta">
-        <a href={`mailto:${contact.email}`}>{contact.email}</a> · Based in {site.basedIn} · Available worldwide ·
+        <a href={`mailto:${contact.email}`}>{contact.email}</a> · Based in {site.basedIn} · Available worldwide ·{' '}
         {contact.languages.join(' & ')}
       </p>
       {

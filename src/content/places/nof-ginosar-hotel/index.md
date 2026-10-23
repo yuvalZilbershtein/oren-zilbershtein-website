@@ -2,7 +2,7 @@
 name: Nof Ginosar Hotel
 city: Ginosar, Sea of Galilee
 country: Israel
-# year:             # ✏️ which High Holidays?
+year: Since 2025
 type: Hotel
 summary: A complete overhaul of the hotel’s pastry department — in one intensive month across the peak High Holidays of Rosh Hashanah and Sukkot.
 services:

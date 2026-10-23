@@ -2,7 +2,7 @@
 name: Manché Pani
 city: New York
 country: United States
-# year:             # ✏️ when was this?
+year: Since 2025
 type: Kosher dairy restaurant & café
 summary: Taking a kosher dairy restaurant to new heights during its renovation and major expansion — with an artisanal bakery menu and an on-site event food line.
 services:
@@ -17,6 +17,7 @@ captions:
   01-croissants.jpg: Croissants, fresh from the oven
   02-mango-passion-fruit-pastry.jpg: Mango & passion fruit pastry
   03-pain-au-chocolat.jpg: Pain au chocolat
+  04-oren-at-manche-pani.jpg: Oren in the Manché Pani kitchen
 ---
 
 Manché Pani brought me in during its renovation and major expansion. I took the restaurant’s kosher dairy concept to a new level, developing an artisanal bakery menu made with premium local ingredients and tailored to American guests.

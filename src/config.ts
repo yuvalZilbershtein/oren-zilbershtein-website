@@ -15,7 +15,7 @@ export const site = {
     intro:
       'I help hotels, bakeries, cafés and restaurants create pastries their guests remember — and build teams that make them perfectly, every day.',
     // Describes src/assets/chef/hero.jpg for screen readers and search engines.
-    imageAlt: 'Strawberry & cream croissant created for Yoss Bakery, Panama City',
+    imageAlt: 'Oren Zilbershtein holding a tray of fresh cinnamon buns',
   },
 
   // Leave `value` empty to count automatically from the places on the site;
@@ -29,7 +29,7 @@ export const site = {
   about: {
     heading: 'From Israel’s kitchens to the world',
     // Describes src/assets/chef/about.jpg
-    imageAlt: 'Oren Zilbershtein with a table of breads, cakes and pastries at Yoss Bakery, Panama City',
+    imageAlt: 'Oren Zilbershtein holding a stack of Jerusalem bagels',
     // ✏️ Replace with the real story: training, kitchens led, signature style, proudest moments.
     paragraphs: [
       'I’ve spent the last twenty-five years in professional pastry kitchens across Israel — creating, testing and perfecting desserts, and working alongside the teams who make them every day.',
@@ -67,11 +67,11 @@ export const site = {
   contact: {
     heading: 'Let’s create something delicious.',
     text: 'Opening a new place, refreshing a dessert menu or training a team? Tell me about your business and let’s see how I can help.',
-    email: 'hello@example.com', // ✏️
-    whatsapp: '972500000000', // ✏️ Country code + number, digits only (972 = Israel)
+    email: 'orenzil2812@gmail.com',
+    whatsapp: '', // ✏️ Country code + number, digits only (e.g. 972 for Israel) — the button appears once filled in
     languages: ['Hebrew', 'English'], // ✏️
     // ✏️ Paste full profile links; leave '' to hide an icon.
-    instagram: 'https://www.instagram.com/',
+    instagram: 'https://www.instagram.com/orenz10/',
     facebook: '',
     linkedin: '',
   },

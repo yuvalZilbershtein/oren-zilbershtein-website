@@ -1109,6 +1109,17 @@ p {
   text-align: center;
 }
 
+.contact-avatar {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow:
+    0 0 0 6px var(--bg),
+    0 0 0 7px var(--accent);
+}
+
 .contact-title {
   max-width: 12em;
   margin: 22px auto 0;

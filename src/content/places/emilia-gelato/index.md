@@ -2,7 +2,7 @@
 name: Emilia Gelato
 city: Panama City
 country: Panama
-# year:             # ✏️ when was this?
+year: Since 2025
 type: Gelateria
 summary: Taking an Italian gelateria far beyond gelato — with oversized artisanal cookies, a premium crêpe menu and new signature flavors.
 services:
