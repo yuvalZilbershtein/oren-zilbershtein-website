@@ -108,7 +108,7 @@ const hasOthers = prev.slug !== place.slug;
           {testimonials.map((t) => {
             const { who, details } = attribution(t);
             return (
-              <figure class="quote-block" data-reveal>
+              <figure class="quote-block" data-long={t.quote.length > 280 || undefined} data-reveal>
                 <blockquote>{t.quote}</blockquote>
                 <figcaption>
                   <strong>{who}</strong>

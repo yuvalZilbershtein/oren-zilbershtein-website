@@ -18,7 +18,7 @@ const [single] = testimonials.length === 1 ? testimonials : [];
         <p class="eyebrow eyebrow--center" data-reveal>
           Kind words
         </p>
-        <figure class="quote-block" data-reveal>
+        <figure class="quote-block" data-long={single.quote.length > 280 || undefined} data-reveal>
           <blockquote>{single.quote}</blockquote>
           <figcaption>
             <strong>{single.who}</strong>

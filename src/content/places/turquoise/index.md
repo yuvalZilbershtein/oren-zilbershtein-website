@@ -2,13 +2,15 @@
 name: Turquoise
 city: Prague
 country: Czech Republic
-# year:             # ✏️ when was this?
-type: Mediterranean Kitchen
-summary: Mediterranean cooking in Prague — from plated dishes and fresh-baked breads to pastries and catering for events.   # ✏️ draft — confirm
-services:           # ✏️ draft based on the photos — confirm or correct
-  - Menu development
-  - Breads & pastries
-  - Catering & events
+year: 2025–2026
+type: Mediterranean Brasserie
+summary: Building a pastry department and a high-end catering division from the ground up — including diplomatic events for the Israeli Embassy.
+services:
+  - Building the pastry department
+  - Launching a high-end catering division
+  - Training the kitchen & pastry teams
+  - Diplomatic events for the Israeli Embassy
+  - Czech koláče line for Chlebíčky
 order: 2
 captions:
   01-chocolate-hazelnut-cake.jpg: Chocolate & hazelnut cake
@@ -27,16 +29,12 @@ captions:
   14-bagel-station.jpg: Jerusalem bagel station
   15-jerusalem-bagels-zaatar.jpg: Jerusalem bagels with za’atar
   16-catering-event-video.mp4: Catering stations at an outdoor event
-  17-tortellini.jpg: Tortellini with peas & zucchini
   18-gnocchi.jpg: Gnocchi with mushrooms
-  19-roasted-cabbage.jpg: Roasted cabbage
   20-ceviche.jpg: Ceviche
   21-bread-and-dips.jpg: Bread & dips
   22-asparagus.jpg: Asparagus
   23-roasted-vegetables.jpg: Roasted vegetables
-  24-halloumi-salad.jpg: Halloumi salad
   25-catering-spread.jpg: Catering spread
-  26-salmon-plates.jpg: Salmon plates
   27-plated-dessert.jpg: Plated dessert
   28-catering-station.jpg: Catering station
   29-flatbread.jpg: Flatbread
@@ -55,5 +53,9 @@ captions:
   42-chocolate-muffins.jpg: Chocolate muffins
   43-berry-tartlet.jpg: Berry tartlet
   44-layer-cake.jpg: Layer cake
-  45-kolaches.jpg: Kolaches
+  45-kolaches.jpg: Czech koláče
 ---
+
+At Turquoise, I built the pastry department and a high-end catering division from the ground up, and trained the kitchen and pastry teams to work at the level the restaurant needed. Together we also led complex, high-profile diplomatic events for the Israeli Embassy.
+
+For the owner’s second venture, Chlebíčky, I developed a line of artisanal sweet and savory Czech koláče — local ingredients, global techniques.

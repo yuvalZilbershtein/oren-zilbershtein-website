@@ -1077,6 +1077,11 @@ p {
   line-height: 1.4;
 }
 
+.quote-block[data-long] blockquote {
+  font-size: clamp(1.15rem, 1.9vw, 1.5rem);
+  line-height: 1.55;
+}
+
 .quote-block blockquote::before {
   height: 0.5em;
   font-size: 4.5rem;
