@@ -28,8 +28,8 @@ export const site = {
 
   about: {
     heading: 'From Israel’s kitchens to the world',
-    // Describes src/assets/chef/about.jpg (a still from Yoss Bakery's reel until the original arrives).
-    imageAlt: 'Oren Zilbershtein holding a stack of sesame bagels',
+    // Describes src/assets/chef/about.jpg
+    imageAlt: 'Oren Zilbershtein with a table of breads, cakes and pastries at Yoss Bakery, Panama City',
     // ✏️ Replace with the real story: training, kitchens led, signature style, proudest moments.
     paragraphs: [
       'I’ve spent the last twenty-five years in professional pastry kitchens across Israel — creating, testing and perfecting desserts, and working alongside the teams who make them every day.',
