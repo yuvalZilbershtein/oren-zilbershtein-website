@@ -68,7 +68,7 @@ export const site = {
     heading: 'Let’s create something delicious.',
     text: 'Opening a new place, refreshing a dessert menu or training a team? Tell me about your business and let’s see how I can help.',
     email: 'orenzil2812@gmail.com',
-    whatsapp: '', // ✏️ Country code + number, digits only (e.g. 972 for Israel) — the button appears once filled in
+    whatsapp: '972537772717', // Country code + number, digits only (972 = Israel)
     languages: ['Hebrew', 'English'], // ✏️
     // ✏️ Paste full profile links; leave '' to hide an icon.
     instagram: 'https://www.instagram.com/orenz10/',
@@ -81,3 +81,10 @@ export const site = {
       'Pastry chef with 25 years of experience in Israel, consulting hotels, bakeries, cafés and restaurants worldwide on menus, recipes, kitchens and teams.',
   },
 };
+
+/** Opens a WhatsApp chat with Oren, with a first message ready to send. */
+export const whatsappLink = site.contact.whatsapp
+  ? `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(
+      'Hi Oren! I found your website and would love to talk about a project.',
+    )}`
+  : '';

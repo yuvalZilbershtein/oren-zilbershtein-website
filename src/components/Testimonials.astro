@@ -1,33 +1,28 @@
 ---
 import { attribution, getPlaces, getTestimonials } from '../lib/content';
 import Icon from './Icon.astro';
+import TestimonialCard from './TestimonialCard.astro';
 
-const placeSlugs = new Set((await getPlaces()).map((p) => p.slug));
-const testimonials = (await getTestimonials()).map((t) => ({
-  ...t,
-  ...attribution(t),
-  link: t.place && placeSlugs.has(t.place) ? `/work/${t.place}/` : undefined,
-}));
-const [single] = testimonials.length === 1 ? testimonials : [];
+const places = new Map((await getPlaces()).map((p) => [p.slug, p]));
+const testimonials = (await getTestimonials()).map((t) => {
+  const place = t.place ? places.get(t.place) : undefined;
+  return {
+    quote: t.quote,
+    ...attribution(t),
+    logo: place?.logo,
+    link: place ? `/work/${place.slug}/` : undefined,
+  };
+});
 ---
 
 {
-  single && (
+  testimonials.length === 1 && (
     <section class="section section--dark" id="testimonials">
       <div class="container">
         <p class="eyebrow eyebrow--center" data-reveal>
           Kind words
         </p>
-        <figure class="quote-block" data-long={single.quote.length > 280 || undefined} data-reveal>
-          <blockquote>{single.quote}</blockquote>
-          <figcaption>
-            <strong>{single.who}</strong>
-            {single.details.map((d) => (
-              <span>{d}</span>
-            ))}
-            {single.link && <a href={single.link}>See the work</a>}
-          </figcaption>
-        </figure>
+        <TestimonialCard {...testimonials[0]} solo />
       </div>
     </section>
   )
@@ -55,16 +50,7 @@ const [single] = testimonials.length === 1 ? testimonials : [];
 
       <div class="t-track" role="region" aria-label="Testimonials" tabindex="0" data-reveal>
         {testimonials.map((t) => (
-          <figure class="t-card">
-            <blockquote>{t.quote}</blockquote>
-            <figcaption>
-              <strong>{t.who}</strong>
-              {t.details.map((d) => (
-                <span>{d}</span>
-              ))}
-              {t.link && <a href={t.link}>See the work</a>}
-            </figcaption>
-          </figure>
+          <TestimonialCard {...t} />
         ))}
       </div>
     </section>
@@ -92,4 +78,5 @@ const [single] = testimonials.length === 1 ? testimonials : [];
     window.addEventListener('resize', update);
     update();
   }
+
 </script>

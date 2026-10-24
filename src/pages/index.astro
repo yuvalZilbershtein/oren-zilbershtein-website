@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import Icon from '../components/Icon.astro';
 import PlaceCard from '../components/PlaceCard.astro';
 import Testimonials from '../components/Testimonials.astro';
-import { site } from '../config';
+import { site, whatsappLink } from '../config';
 import signature from '../assets/brand/signature.png';
 import Base from '../layouts/Base.astro';
 import { getChefPhoto, getPlaces } from '../lib/content';
@@ -24,9 +24,6 @@ const heroPhoto = getChefPhoto('hero');
 const aboutPhoto = getChefPhoto('about');
 const contactPhoto = getChefPhoto('contact');
 const { contact } = site;
-const whatsappLink = `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(
-  'Hi! I found your website and would love to talk about a project.',
-)}`;
 const socials = [
   { name: 'instagram', href: contact.instagram, label: 'Instagram' },
   { name: 'facebook', href: contact.facebook, label: 'Facebook' },
@@ -203,7 +200,7 @@ const badgeText = `${site.tagline} • ${site.basedIn} • Worldwide • `.toUpp
       <div class="contact-actions">
         <a class="btn" href={`mailto:${contact.email}`}><Icon name="mail" /> Email me</a>
         {
-          contact.whatsapp && (
+          whatsappLink && (
             <a class="btn btn--ghost" href={whatsappLink} target="_blank" rel="noopener">
               <Icon name="whatsapp" /> WhatsApp
             </a>

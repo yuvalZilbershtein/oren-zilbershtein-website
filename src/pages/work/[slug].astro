@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import Gallery from '../../components/Gallery.astro';
 import Icon from '../../components/Icon.astro';
+import TestimonialCard from '../../components/TestimonialCard.astro';
 import Base from '../../layouts/Base.astro';
 import {
   attribution,
@@ -105,20 +106,9 @@ const hasOthers = prev.slug !== place.slug;
           <p class="eyebrow eyebrow--center" data-reveal>
             In their words
           </p>
-          {testimonials.map((t) => {
-            const { who, details } = attribution(t);
-            return (
-              <figure class="quote-block" data-long={t.quote.length > 280 || undefined} data-reveal>
-                <blockquote>{t.quote}</blockquote>
-                <figcaption>
-                  <strong>{who}</strong>
-                  {details.map((d) => (
-                    <span>{d}</span>
-                  ))}
-                </figcaption>
-              </figure>
-            );
-          })}
+          {testimonials.map((t) => (
+            <TestimonialCard quote={t.quote} {...attribution(t)} logo={logo} solo />
+          ))}
         </div>
       </section>
     )

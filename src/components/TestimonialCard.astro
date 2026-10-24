@@ -1,0 +1,60 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+
+interface Props {
+  quote: string;
+  who: string;
+  details: string[];
+  logo?: ImageMetadata;
+  link?: string;
+  solo?: boolean;
+}
+
+const { quote, who, details, logo, link, solo = false } = Astro.props;
+---
+
+<figure class:list={['t-card', solo && 't-card--solo']} data-reveal={solo || undefined}>
+  <figcaption class="t-who">
+    {
+      logo && (
+        <span class="t-who__logo">
+          <Image src={logo} alt="" widths={[104, 208]} sizes="52px" />
+        </span>
+      )
+    }
+    <span class="t-who__text">
+      <strong>{who}</strong>
+      {details.map((d) => (
+        <span>{d}</span>
+      ))}
+    </span>
+  </figcaption>
+  <blockquote data-quote>{quote}</blockquote>
+  <button class="t-more" type="button" hidden>Read more</button>
+  {
+    link && (
+      <a class="arrow-link t-link" href={link}>
+        See the work <Icon name="arrow-right" />
+      </a>
+    )
+  }
+</figure>
+
+<script>
+  // On small screens long quotes are shortened, with a "Read more" button to open them.
+  document.querySelectorAll<HTMLElement>('.t-card').forEach((card) => {
+    const quote = card.querySelector<HTMLElement>('[data-quote]')!;
+    const more = card.querySelector<HTMLButtonElement>('.t-more')!;
+    const check = () => {
+      if (!card.hasAttribute('data-open')) more.hidden = quote.scrollHeight <= quote.clientHeight + 2;
+    };
+    more.addEventListener('click', () => {
+      card.setAttribute('data-open', '');
+      more.hidden = true;
+    });
+    check();
+    window.addEventListener('resize', check);
+  });
+</script>

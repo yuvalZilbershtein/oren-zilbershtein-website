@@ -992,8 +992,9 @@ p {
 
 .t-track {
   display: grid;
-  grid-auto-columns: min(440px, 84%);
+  grid-auto-columns: min(820px, 88%);
   grid-auto-flow: column;
+  align-items: start;
   gap: clamp(16px, 2vw, 28px);
   padding-inline: max(var(--gutter), (100% - var(--container)) / 2);
   padding-bottom: 6px;
@@ -1009,47 +1010,57 @@ p {
 }
 
 .t-card {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
+  display: grid;
+  gap: 24px;
   margin: 0;
-  padding: clamp(28px, 3vw, 40px);
+  padding: clamp(24px, 3.4vw, 44px);
   border: 1px solid rgb(243 238 234 / 0.09);
   border-radius: var(--radius);
   background: var(--dark-soft);
   scroll-snap-align: start;
 }
 
-.t-card blockquote {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
-  line-height: 1.55;
+.t-card--solo {
+  max-width: 900px;
+  margin: clamp(28px, 4vw, 44px) auto 0;
 }
 
-.t-card blockquote::before,
-.quote-block blockquote::before {
-  content: '“';
-  display: block;
-  height: 0.55em;
-  margin-bottom: 14px;
-  font-size: 4rem;
-  line-height: 1;
-  color: var(--accent);
+/* Who said it — at the top, so the quote reads in context */
+.t-who {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(243 238 234 / 0.12);
 }
 
-.t-card figcaption {
+.t-who__logo {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.t-who__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.t-who__text {
   display: grid;
   gap: 2px;
-  margin-top: auto;
-  padding-top: 22px;
-  border-top: 1px solid rgb(243 238 234 / 0.1);
   font-size: 0.9rem;
+  line-height: 1.45;
   color: var(--on-dark-muted);
 }
 
-.t-card figcaption strong,
-.quote-block figcaption strong {
+.t-who__text strong {
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.2em;
@@ -1057,50 +1068,55 @@ p {
   color: var(--on-dark);
 }
 
-.t-card figcaption a,
-.quote-block figcaption a {
-  width: fit-content;
-  margin-top: 10px;
+.t-card blockquote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.02rem, 1.25vw, 1.14rem);
+  line-height: 1.7;
+  color: var(--on-dark);
+}
+
+.t-card blockquote::before {
+  content: '“';
+  margin-right: 0.08em;
   color: var(--accent);
 }
 
-.quote-block {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
+.t-card blockquote::after {
+  content: '”';
+  margin-left: 0.04em;
+  color: var(--accent);
 }
 
-.quote-block blockquote {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.45rem, 3vw, 2.2rem);
-  line-height: 1.4;
+.t-more {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
-.quote-block[data-long] blockquote {
-  font-size: clamp(1.15rem, 1.9vw, 1.5rem);
-  line-height: 1.55;
+.t-link {
+  color: var(--accent);
 }
 
-.quote-block blockquote::before {
-  height: 0.5em;
-  font-size: 4.5rem;
+.t-link:hover svg {
+  transform: translateX(4px);
 }
 
-.quote-block figcaption {
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-  margin-top: 32px;
-  color: var(--on-dark-muted);
-}
-
-.eyebrow + .quote-block {
-  margin-top: clamp(28px, 4vw, 44px);
-}
-
-.quote-block + .quote-block {
-  margin-top: 72px;
+@media (max-width: 700px) {
+  .t-card:not([data-open]) blockquote {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 9;
+  }
 }
 
 /* ---------- Contact ---------- */
@@ -1181,6 +1197,34 @@ p {
 .socials svg {
   width: 18px;
   height: 18px;
+}
+
+/* ---------- WhatsApp button (every page) ---------- */
+
+.wa-float {
+  position: fixed;
+  right: clamp(16px, 2.5vw, 28px);
+  bottom: clamp(16px, 2.5vw, 28px);
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 12px 30px -10px rgb(0 0 0 / 0.45);
+  transition: transform 0.25s var(--ease);
+}
+
+.wa-float:hover {
+  transform: scale(1.07);
+}
+
+.wa-float svg {
+  width: 30px;
+  height: 30px;
+  stroke-width: 1.8;
 }
 
 /* ---------- Footer ---------- */
