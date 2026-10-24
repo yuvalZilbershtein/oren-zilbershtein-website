@@ -49,10 +49,10 @@ folder name to also show the quote on that place's page.
 
 ## Publishing
 
-1. `npm run build` — creates the finished site in `dist/`.
-2. Host `dist/` on any static host. Easiest: drag the `dist` folder onto
-   <https://app.netlify.com/drop>. For automatic updates, put the project on GitHub and
-   connect it to Netlify, Vercel or Cloudflare Pages (build command `npm run build`,
-   output folder `dist`).
-3. Point your domain at the host, then set `site:` in `astro.config.mjs` to that domain
-   (used for link previews on WhatsApp/Facebook and for search engines).
+The site is live at **https://ozculinary.com**, hosted free on GitHub Pages.
+Every push to `main` rebuilds and publishes it automatically (see the
+"Actions" tab on GitHub; it takes a couple of minutes).
+
+The domain is registered at Namecheap. Its DNS points to GitHub Pages:
+four `A` records for `@` (185.199.108.153, 185.199.109.153, 185.199.110.153,
+185.199.111.153) and a `CNAME` for `www` → `yuvalzilbershtein.github.io`.
