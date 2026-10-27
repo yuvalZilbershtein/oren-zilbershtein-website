@@ -11,7 +11,7 @@ services:
   - New gelato flavors for local & kosher guests
   - Outdoor catering setup for private events
   - Team training & standardized recipe books
-order: 7
+order: 6
 captions:
   00-gelato-fresh-from-the-machine.mp4: Gelato, fresh from the machine
   01-gelato-cone.jpg: Gelato cone

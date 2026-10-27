@@ -11,7 +11,7 @@ services:
   - Hands-on training for the pastry team
   - Scalable menus for buffets, conferences & banquets
   - Working with the Executive Chef & F&B leadership
-order: 6
+order: 5
 captions:
   00-dessert-buffet.mp4: A walk along the hotel’s dessert buffet
   01-pavlova.jpg: Pavlova with fresh fruit
