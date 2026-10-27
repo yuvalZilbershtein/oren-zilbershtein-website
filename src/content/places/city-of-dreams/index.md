@@ -11,7 +11,7 @@ services:
   - Plated fine-dining desserts for holiday & Shabbat gala dinners
   - Uniting a core team with local resort staff
   - Working with the executive kitchen under the strictest kosher standards
-order: 4
+order: 5
 captions:
   00-dessert-buffet.mp4: A walk through the Passover dessert buffet
   00b-pastry-team.mp4: The pastry team at work
